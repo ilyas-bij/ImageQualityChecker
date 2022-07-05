@@ -55,7 +55,7 @@ def upload_submit():
 
 		resp = jsonify({"quality": percentageInt})
 		resp.status_code = 201
-		# os.remove("uploads/"+filename)
+		os.remove("uploads/"+filename)
 		return resp
 if __name__ == '__main__':
-    app.run(debug=false)
+    app.run(debug=false,host='0.0.0.0')
