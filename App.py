@@ -7,7 +7,7 @@ from brisque import BRISQUE
 from time import time
 
 app = Flask(__name__)
-
+os.mkdir("uploads")
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
