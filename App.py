@@ -1,13 +1,16 @@
 import base64
 import os
 from flask import Flask,  request,render_template,jsonify,send_file
+from sqlalchemy import false
 from werkzeug.utils import secure_filename
 from brisque import BRISQUE
 
 from time import time
 
 app = Flask(__name__)
-os.mkdir("uploads")
+
+if not os.path.exists("uploads"):
+    os.makedirs("uploads")
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
@@ -39,17 +42,20 @@ def upload_submit():
 		
 		filename = secure_filename(str(time())+file.filename )
 		file.save(os.path.join("uploads", filename))
+		
+		
 		# quality detection 
+		
 		obj = BRISQUE("uploads/"+filename, url=False)
 		quality  = obj.score()
-
 		# percentage quality -->150 to 120  = 62 to 52 
 		percentage = 100-((quality*100)/120)
 		percentageInt = int(percentage)
 
+
 		resp = jsonify({"quality": percentageInt})
 		resp.status_code = 201
-		os.remove("uploads/"+filename)
+		# os.remove("uploads/"+filename)
 		return resp
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=false)
