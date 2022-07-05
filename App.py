@@ -17,7 +17,7 @@ def allowed_file(filename):
 
 @app.route('/')
 def upload_init():
-		return jsonify({'message' : ' ilyas li kayn'})
+		return jsonify({'message' : ' script ran successfully '})
 
 
 
